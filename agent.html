@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <meta charset="utf-8">
+	    <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>SM - tweet page</title>
+        <link rel="stylesheet"  type="text/css" href="style.css"/>
+    </head>
+
+    <body>
+        <div id="agent-info">
+            <h1>Secret agent identity revealed</h1>
+            <p>The ultra secret info below:</p>
+        </div>
+    </body>
+    
+    <script src="agent-info.js"></script>
+    <script type="module">
+  
+    const agent = document.querySelector("#agent-info");
+    const queryString = window.location.search;
+    const urlParams = new URLSearchParams(queryString);
+    const id = urlParams.get('id');
+
+    //if there's no info stored in localStorage we add it before rendering the page
+    //so the user can access a specific cat agent page 
+    console.log(`check:: ${localStorage.getItem(id) != null}`);
+    if(!localStorage.getItem(id)){
+        const agentInfo = getAgentInfo(id);
+        console.log(`get agent info:: ${agentInfo}`);
+        window.localStorage.setItem(id, JSON.stringify(agentInfo));
+    }
+
+    //below we insert the html elements based on the info in the local storage
+    const agentData = JSON.parse(localStorage.getItem(id))
+    let str = '';
+    str = '<div class="agent-page" id="agent-'+id+'">'+
+            '<p><b>Name: </b>'+agentData.name +'</p>'+
+            '<p><b>Image: </b></p>'+
+            '<img src="'+agentData.url+'"/>'+
+            '<p><b>Description: </b>'+ agentData.text+'</p>'+
+            '<p><b>Achievements: </b>'+ agentData.achievements+'</p>'+
+            '<p><b>Secret: </b>'+ agentData.secret+'</p>'+
+            '<p><b>ID: </b>'+ id +'</p>'+
+            '</div>';
+
+    agent.insertAdjacentHTML("beforeend", str);
+</script>
+</html>
