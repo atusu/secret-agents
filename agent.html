@@ -35,7 +35,7 @@
     //below we insert the html elements based on the info in the local storage
     const agentData = JSON.parse(localStorage.getItem(id))
     let str = '';
-    str = `<div class="agent-page" id="agent-'${id}>
+    str = `<div class="agent-page" id="agent-${id}">
             <p><b>Name: </b>${agentData.name}</p>
             <p><b>Image: </b></p>
             <img src="${agentData.url}"/>
